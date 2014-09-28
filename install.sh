@@ -14,7 +14,7 @@ source ./hacking/env-setup
 
 # Start Docker Registry Image
 mkdir -p /vagrant/images
-docker pull registry:latest
+docker pull registry:0.8.1
 (docker start registry) || (docker run -d -v /vagrant/images:/tmp/registry --name registry -p 5000:5000 registry)
 
 # Start Docker Registry-UI Image
