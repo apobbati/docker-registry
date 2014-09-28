@@ -12,11 +12,12 @@ cd $ANSIBLE_DIR
 cd $ANSIBLE_DIR
 source ./hacking/env-setup
 
-# Start Docker Image
+# Start Docker Registry Image
 mkdir -p /vagrant/images
 docker pull registry:latest
 (docker start registry) || (docker run -d -v /vagrant/images:/tmp/registry --name registry -p 5000:5000 registry)
 
+# Start Docker Registry-UI Image
 mkdir -p /vagrant/ui
 docker pull atcol/docker-registry-ui:latest
 (docker start registry-ui) || (docker run --name registry-ui -d -p 5001:8080 -v /vagrant/ui:/var/lib/h2 -e REG1=http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' registry):5000/v1/ atcol/docker-registry-ui)
