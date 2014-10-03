@@ -4,6 +4,8 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+hostname = "docker-registry.local"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
@@ -26,9 +28,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
 
-  config.vm.hostname = "docker-registry.local"
+  config.vm.hostname = hostname
   config.vm.network :private_network, ip: "192.168.22.10"
 
-  config.vm.provision "shell", path: "install.sh"
+  config.vm.provision "shell" do |s|
+    s.path = "install.sh"
+    s.args = "'#{hostname}'"
+  end
 end
 

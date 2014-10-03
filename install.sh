@@ -1,5 +1,7 @@
 #!/bin/bash
 
+REGISTRY_HOSTNAME=$1
+
 add-apt-repository ppa:docker-maint/testing
 apt-get update
 apt-get install -y docker.io git python-yaml python-jinja2 python-pycurl nginx
@@ -20,7 +22,7 @@ docker pull registry:0.8.1
 # Start Docker Registry-UI Image
 mkdir -p /vagrant/ui
 docker pull atcol/docker-registry-ui:latest
-(docker start registry-ui) || (docker run --name registry-ui -d -p 5001:8080 -v /vagrant/ui:/var/lib/h2 -e REG1=http://$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' registry):5000/v1/ atcol/docker-registry-ui)
+(docker start registry-ui) || (docker run --name registry-ui -d -p 5001:8080 -v /vagrant/ui:/var/lib/h2 -e REG1=http://$REGISTRY_HOSTNAME/v1/ atcol/docker-registry-ui)
 
 # Enable Startup Script
 cp /vagrant/files/docker-registry.conf /etc/init/
