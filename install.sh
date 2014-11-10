@@ -5,7 +5,9 @@ REGISTRY_HOSTNAME=$1
 apt-get update
 apt-get install -y git nginx
 
-curl -sSL https://get.docker.com/ | sh
+if [ ! -f /usr/bin/docker ]; then
+	curl -sSL https://get.docker.com/ | sh
+fi
 
 # Start Docker Registry Image
 mkdir -p /vagrant/images
