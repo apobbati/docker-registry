@@ -10,7 +10,7 @@ curl -sSL https://get.docker.com/ | sh
 # Start Docker Registry Image
 mkdir -p /vagrant/images
 docker pull registry:0.8.1
-(docker start registry) || (docker run -d -v /vagrant/images:/tmp/registry --name registry -p 5000:5000 registry)
+(docker start registry) || (docker run -d -v /vagrant/images:/tmp/registry --name registry -p 5000:5000 registry:0.8.1)
 
 # Start Docker Registry-UI Image
 mkdir -p /vagrant/ui
