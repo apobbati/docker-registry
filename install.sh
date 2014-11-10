@@ -2,17 +2,10 @@
 
 REGISTRY_HOSTNAME=$1
 
-add-apt-repository ppa:docker-maint/testing
 apt-get update
-apt-get install -y docker.io git python-yaml python-jinja2 python-pycurl nginx
+apt-get install -y git nginx
 
-# TODO: Provision using ansible
-ANSIBLE_DIR=/opt/ansible
-mkdir -p $ANSIBLE_DIR
-cd $ANSIBLE_DIR
-(git clone https://github.com/ansible/ansible.git $ANSIBLE_DIR) || (cd $ANSIBLE_DIR;git pull)
-cd $ANSIBLE_DIR
-source ./hacking/env-setup
+curl -sSL https://get.docker.com/ | sh
 
 # Start Docker Registry Image
 mkdir -p /vagrant/images
